@@ -89,12 +89,18 @@ type PolicyReconciler struct {
 	RootPolicyLocks *sync.Map
 }
 
+var doPanic = true
+
 // Reconcile reads that state of the cluster for a Policy object and makes changes based on the state read
 // and what is in the Policy.Spec
 // Note:
 // The Controller will requeue the Request to be processed again if the returned error is non-nil or
 // Result.Requeue is true, otherwise upon completion it will remove the work from the queue.
 func (r *PolicyReconciler) Reconcile(ctx context.Context, request ctrl.Request) (ctrl.Result, error) {
+	if doPanic {
+		panic("broken")
+	}
+
 	log := log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
 
 	log.V(3).Info("Acquiring the lock for the root policy")
